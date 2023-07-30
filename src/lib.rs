@@ -12,17 +12,24 @@ pub async fn run() -> anyhow::Result<()> {
     Ok(())
 }
 
-async fn handler(headers: Vec<(String, String)>, qry: HashMap<String, Value>, _body: Vec<u8>) {
+async fn handler(headers: Vec<(String, String)>, qry: HashMap<String, Value>, body: Vec<u8>) {
     logger::init();
     log::info!("Headers -- {:?}", headers);
 
-    let msg = qry.get("msg").unwrap();
-    // let msg = String::from_utf8(body).unwrap_or("".to_string());
-    let resp = format!("Welcome to flows.network.\nYou just said: '{}'.\nLearn more at: https://github.com/flows-network/hello-world\n", msg);
+    // Your flow function implementation here
+    // ...
+
+    let resp = "Flow function response".to_string();
 
     send_response(
         200,
-        vec![(String::from("content-type"), String::from("text/html"))],
-        resp.as_bytes().to_vec(),
+        vec![(String::from("content-type"), String::from("text/plain"))],
+        resp.into_bytes(),
     );
+}
+
+fn main() {
+    // Start the execution of the flow function.
+    // In this case, we use the run() function.
+    run().unwrap();
 }
